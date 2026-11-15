@@ -82,7 +82,15 @@
     font-size:12px;font-weight:700;letter-spacing:.08em;text-transform:uppercase;
     color:var(--night);background:var(--turquoise);
     padding:10px 16px;border-radius:999px;
+    transition:transform .22s cubic-bezier(.2,.7,.2,1), box-shadow .25s ease, filter .25s ease;
   }
+  .header__cta:hover,
+  .header__cta:focus-visible{
+    transform:translateY(-2px);
+    filter:brightness(1.07);
+    box-shadow:0 10px 26px rgba(0,255,215,.4);
+  }
+  .header__cta:focus-visible{outline:2px solid var(--turquoise);outline-offset:3px}
   .header__cta:active{transform:scale(.97)}
 
   /* ---------- HERO ---------- */
@@ -104,14 +112,42 @@
 
   .hero__actions{display:flex;flex-wrap:wrap;gap:12px;margin-top:28px}
   .btn{
+    position:relative;overflow:hidden;
     display:inline-flex;align-items:center;justify-content:center;gap:10px;
     padding:15px 26px;border-radius:999px;border:0;
     font-size:13px;font-weight:700;letter-spacing:.08em;text-transform:uppercase;
-    transition:transform .15s ease, box-shadow .2s ease;
+    transition:transform .22s cubic-bezier(.2,.7,.2,1), box-shadow .25s ease,
+      background .25s ease, color .25s ease, border-color .25s ease, filter .25s ease;
   }
+  .btn::after{
+    content:"";position:absolute;top:0;left:-130%;width:55%;height:100%;
+    background:linear-gradient(100deg, transparent, rgba(255,255,255,.45), transparent);
+    transform:skewX(-18deg);transition:left .6s ease;pointer-events:none;
+  }
+  .btn:hover::after,
+  .btn:focus-visible::after{left:140%}
   .btn:active{transform:scale(.97)}
+  .btn:focus-visible{outline:2px solid var(--turquoise);outline-offset:3px}
   .btn--primary{background:var(--turquoise);color:var(--night);box-shadow:0 10px 30px rgba(0,255,215,.18)}
+  .btn--primary:hover,
+  .btn--primary:focus-visible{
+    transform:translateY(-3px);
+    filter:brightness(1.07);
+    box-shadow:0 18px 40px rgba(0,255,215,.38), 0 0 0 1px rgba(0,255,215,.5);
+  }
   .btn--ghost{border:1px solid rgba(184,243,236,.35);color:var(--white);background:transparent}
+  .btn--ghost:hover,
+  .btn--ghost:focus-visible{
+    transform:translateY(-3px);
+    color:var(--turquoise);
+    border-color:rgba(0,255,215,.75);
+    background:rgba(0,255,215,.09);
+    box-shadow:0 16px 34px rgba(0,0,0,.35), 0 0 24px rgba(0,255,215,.16);
+  }
+  @media (hover:none){
+    .btn:active{transform:scale(.96)}
+    .btn:active::after{left:140%}
+  }
   .btn svg{width:16px;height:16px;flex:none}
 
   .hero__meta{
@@ -155,12 +191,23 @@
     border:1px solid rgba(184,243,236,.16);background:var(--deep);
     padding:0;text-align:left;
     box-shadow:0 18px 40px rgba(0,0,0,.35);
+    transition:transform .3s cubic-bezier(.2,.7,.2,1), box-shadow .3s ease, border-color .3s ease;
   }
   .reel img{width:100%;height:100%;object-fit:cover;transition:transform .5s ease}
   .reel::after{
     content:"";position:absolute;inset:0;
     background:linear-gradient(to top, rgba(15,38,51,.96) 0%, rgba(15,38,51,.15) 45%, rgba(15,38,51,0) 70%);
   }
+  .reel:hover,
+  .reel:focus-visible{
+    transform:translateY(-4px);
+    border-color:rgba(0,255,215,.55);
+    box-shadow:0 26px 54px rgba(0,0,0,.5), 0 0 0 1px rgba(0,255,215,.18);
+  }
+  .reel:focus-visible{outline:2px solid var(--turquoise);outline-offset:3px}
+  .reel:hover img,
+  .reel:focus-visible img{transform:scale(1.05)}
+  .reel:active{transform:scale(.99)}
   .reel:active img{transform:scale(1.03)}
   .reel__play{
     position:absolute;top:50%;left:50%;transform:translate(-50%,-50%);
@@ -168,17 +215,43 @@
     background:rgba(0,255,215,.92);color:var(--night);
     display:grid;place-items:center;z-index:2;
     box-shadow:0 0 0 8px rgba(0,255,215,.16);
+    transition:transform .3s cubic-bezier(.2,.7,.2,1), box-shadow .3s ease, background .3s ease;
+  }
+  .reel:hover .reel__play,
+  .reel:focus-visible .reel__play{
+    transform:translate(-50%,-50%) scale(1.12);
+    box-shadow:0 0 0 12px rgba(0,255,215,.22);
   }
   .reel__play svg{width:18px;height:18px;margin-left:2px}
   .reel__info{position:absolute;left:14px;right:14px;bottom:12px;z-index:2}
   .reel__info small{
     display:block;font-size:9px;font-weight:700;letter-spacing:.18em;
     text-transform:uppercase;color:var(--turquoise);margin-bottom:3px;
+    text-shadow:0 1px 4px rgba(0,0,0,.9), 0 0 10px rgba(0,0,0,.65);
   }
   .reel__info b{
+    position:relative;display:inline-block;isolation:isolate;
     font-family:'Bebas Neue',sans-serif;font-weight:400;
     font-size:1.15rem;letter-spacing:.04em;line-height:1.02;
-    text-transform:uppercase;
+    text-transform:uppercase;color:rgba(255,255,255,.85);
+    text-shadow:0 2px 8px rgba(0,0,0,.95), 0 1px 3px rgba(0,0,0,.85);
+  }
+  .reel__info b::before,
+  .reel__info b::after{
+    content:attr(data-text);
+    position:absolute;left:0;top:0;z-index:-1;
+    white-space:pre-line;pointer-events:none;
+    text-shadow:none;
+  }
+  .reel__info b::before{
+    color:var(--turquoise);opacity:.55;
+    filter:blur(7px);
+    transform:translate(-4px,2px) scale(1.04);
+  }
+  .reel__info b::after{
+    color:var(--white);opacity:.4;
+    filter:blur(10px);
+    transform:translate(5px,-3px) scale(1.03);
   }
   .reels__note{display:flex;align-items:center;gap:8px;margin-top:14px;font-size:11px;color:var(--mint);opacity:.8}
   .reels__note::before{content:"";width:6px;height:6px;border-radius:50%;background:var(--turquoise)}
@@ -193,7 +266,11 @@
   .case summary{
     list-style:none;display:flex;align-items:center;gap:14px;
     padding:16px 18px;cursor:pointer;user-select:none;
+    transition:background .25s ease;
   }
+  .case summary:hover,
+  .case summary:focus-visible{background:rgba(0,255,215,.06)}
+  .case summary:focus-visible{outline:2px solid var(--turquoise);outline-offset:-2px}
   .case summary::-webkit-details-marker{display:none}
   .case__num{
     font-family:'Bebas Neue',sans-serif;font-size:1.5rem;color:var(--turquoise);
@@ -348,8 +425,16 @@
     background:var(--turquoise);color:var(--night);
     display:grid;place-items:center;
     box-shadow:0 12px 32px rgba(0,255,215,.3);
+    transition:transform .22s cubic-bezier(.2,.7,.2,1), box-shadow .25s ease, filter .25s ease;
   }
   .float-wa svg{width:26px;height:26px}
+  .float-wa:hover,
+  .float-wa:focus-visible{
+    transform:translateY(-3px) scale(1.06);
+    filter:brightness(1.08);
+    box-shadow:0 18px 42px rgba(0,255,215,.5);
+  }
+  .float-wa:focus-visible{outline:2px solid var(--white);outline-offset:3px}
   .float-wa:active{transform:scale(.94)}
 
   /* ---------- REVEAL ---------- */
@@ -424,31 +509,31 @@
         <button class="reel reveal" data-id="academia-tesis" aria-label="Reproducir reel de Academia Tesis">
           <img src="thumbs/academia-tesis.jpg" alt="Reel Academia Tesis" loading="lazy">
           <span class="reel__play"><svg viewBox="0 0 24 24" fill="currentColor"><path d="M8 5v14l11-7z"/></svg></span>
-          <span class="reel__info"><small>Educación</small><b>Academia<br>Tesis</b></span>
+          <span class="reel__info"><small>Educación</small><b data-text="Academia&#10;Tesis">Academia<br>Tesis</b></span>
         </button>
 
         <button class="reel reveal" data-id="compartamos-la-carga" aria-label="Reproducir reel de Compartamos la Carga">
           <img src="thumbs/compartamos-la-carga.jpg" alt="Reel Compartamos la Carga" loading="lazy">
           <span class="reel__play"><svg viewBox="0 0 24 24" fill="currentColor"><path d="M8 5v14l11-7z"/></svg></span>
-          <span class="reel__info"><small>Salud emocional</small><b>Compartamos<br>la Carga</b></span>
+          <span class="reel__info"><small>Salud emocional</small><b data-text="Compartamos&#10;la Carga">Compartamos<br>la Carga</b></span>
         </button>
 
         <button class="reel reveal" data-id="fabrica-de-unas" aria-label="Reproducir reel de Fábrica de Uñas">
           <img src="thumbs/fabrica-de-unas.jpg" alt="Reel Fábrica de Uñas" loading="lazy">
           <span class="reel__play"><svg viewBox="0 0 24 24" fill="currentColor"><path d="M8 5v14l11-7z"/></svg></span>
-          <span class="reel__info"><small>Beauty</small><b>Fábrica<br>de Uñas</b></span>
+          <span class="reel__info"><small>Beauty</small><b data-text="Fábrica&#10;de Uñas">Fábrica<br>de Uñas</b></span>
         </button>
 
         <button class="reel reveal" data-id="joyeria-sarita" aria-label="Reproducir reel de Joyería Sarita">
           <img src="thumbs/joyeria-sarita.jpg" alt="Reel Joyería Sarita" loading="lazy">
           <span class="reel__play"><svg viewBox="0 0 24 24" fill="currentColor"><path d="M8 5v14l11-7z"/></svg></span>
-          <span class="reel__info"><small>Joyería</small><b>Joyería<br>Sarita</b></span>
+          <span class="reel__info"><small>Joyería</small><b data-text="Joyería&#10;Sarita">Joyería<br>Sarita</b></span>
         </button>
 
         <button class="reel reveal" data-id="mamas-emprendedoras" aria-label="Reproducir reel de Mamás Emprendedoras">
           <img src="thumbs/mamas-emprendedoras.jpg" alt="Reel Mamás Emprendedoras" loading="lazy">
           <span class="reel__play"><svg viewBox="0 0 24 24" fill="currentColor"><path d="M8 5v14l11-7z"/></svg></span>
-          <span class="reel__info"><small>Comunidad</small><b>Mamás<br>Emprendedoras</b></span>
+          <span class="reel__info"><small>Comunidad</small><b data-text="Mamás&#10;Emprendedoras">Mamás<br>Emprendedoras</b></span>
         </button>
       </div>
 
@@ -506,29 +591,29 @@
         </summary>
         <div class="case__body">
           <h4>El reto</h4>
-          <p>Mostrar técnica, detalle y arte en segundos, sin que el espectador pierda el interés.</p>
+          <p>Demostrar que, antes de cada diseño, existe un protocolo real de desinfección del material: un paso invisible para la clienta, pero clave para su seguridad.</p>
           <h4>La solución</h4>
-          <p>Close-ups, transiciones al ritmo de la música y una estética cuidada que eleva cada diseño.</p>
+          <p>Registramos el proceso completo, paso a paso, con close-ups y un ritmo que hace visible cada detalle de la desinfección del instrumental antes del trabajo.</p>
           <h4>El resultado</h4>
-          <p>Un reel que exhibe el trabajo como experiencia premium.</p>
-          <div class="case__tags"><span>Producción</span><span>Ritmo</span><span>Edición</span></div>
+          <p>Un reel que transmite confianza y profesionalismo: la clienta ve el cuidado detrás de cada servicio.</p>
+          <div class="case__tags"><span>Proceso</span><span>Higiene</span><span>Confianza</span></div>
         </div>
       </details>
 
       <details class="case reveal">
         <summary>
           <span class="case__num">04</span>
-          <span class="case__name"><b>Joyería Sarita</b><small>Joyería y accesorios</small></span>
+          <span class="case__name"><b>Joyería Sarita</b><small>Joyería y accesorios · Todo a 100 Bs</small></span>
           <svg class="case__chev" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><path d="M6 9l6 6 6-6"/></svg>
         </summary>
         <div class="case__body">
           <h4>El reto</h4>
-          <p>Transmitir valor, brillo y confianza en una compra que es, ante todo, emocional.</p>
+          <p>Promocionar la tienda y todas sus joyas a 100 Bs sin que pareciera una liquidación barata: atraer, entretener y vender en un solo reel.</p>
           <h4>La solución</h4>
-          <p>Planos macro, luz cuidada y storytelling de ocasiones especiales para cada pieza.</p>
+          <p>Un guion de comedia con actuación cercana y ritmo ágil, que muestra las piezas y remata con el precio como gancho.</p>
           <h4>El resultado</h4>
-          <p>Deseo de marca y recordación en cada detalle.</p>
-          <div class="case__tags"><span>Dirección</span><span>Macro</span><span>Edición</span></div>
+          <p>Un reel promocional que entretiene, se comparte y convierte el precio en motivo de visita.</p>
+          <div class="case__tags"><span>Comedia</span><span>Guion</span><span>Venta</span></div>
         </div>
       </details>
 
@@ -609,8 +694,14 @@
           <svg viewBox="0 0 24 24" fill="currentColor"><path d="M17.5 14.4c-.3-.15-1.76-.87-2.03-.97-.27-.1-.47-.15-.67.15-.2.3-.77.97-.94 1.17-.17.2-.35.22-.65.07-.3-.15-1.26-.46-2.4-1.48-.89-.79-1.49-1.77-1.66-2.07-.17-.3-.02-.46.13-.61.13-.13.3-.35.45-.52.15-.17.2-.3.3-.5.1-.2.05-.37-.02-.52-.08-.15-.67-1.62-.92-2.22-.24-.58-.49-.5-.67-.51h-.57c-.2 0-.52.07-.79.37-.27.3-1.04 1.02-1.04 2.48s1.06 2.88 1.21 3.08c.15.2 2.1 3.2 5.08 4.49.71.31 1.26.49 1.69.63.71.23 1.36.19 1.87.12.57-.09 1.76-.72 2.01-1.41.25-.7.25-1.29.17-1.41-.07-.13-.27-.2-.57-.35zM12.05 21.8h-.01a9.87 9.87 0 01-5.03-1.38l-.36-.21-3.74.98 1-3.65-.24-.37a9.86 9.86 0 01-1.51-5.26c0-5.45 4.44-9.88 9.9-9.88a9.83 9.83 0 016.99 2.9 9.82 9.82 0 012.9 6.99c0 5.45-4.44 9.88-9.9 9.88zm8.42-18.3A11.82 11.82 0 0012.05 0C5.5 0 .16 5.34.16 11.9c0 2.1.55 4.14 1.59 5.95L.06 24l6.3-1.65a11.88 11.88 0 005.68 1.45h.01c6.55 0 11.89-5.34 11.89-11.9 0-3.18-1.24-6.16-3.48-8.4z"/></svg>
           Escribir por WhatsApp
         </a>
-        <a class="btn btn--ghost" href="https://www.instagram.com/studioinnova.sc" target="_blank" rel="noopener">Instagram <b>@studioinnova.sc</b></a>
-        <a class="btn btn--ghost" href="https://www.tiktok.com/@innovastudio301" target="_blank" rel="noopener">TikTok <b>@innovastudio301</b></a>
+        <a class="btn btn--primary" href="https://www.instagram.com/studioinnova.sc" target="_blank" rel="noopener" aria-label="Instagram de INNOVA Studio">
+          <svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M12 0C8.74 0 8.333.015 7.053.072 5.775.132 4.905.333 4.14.63c-.789.306-1.459.717-2.126 1.384S.935 3.35.63 4.14C.333 4.905.131 5.775.072 7.053.012 8.333 0 8.74 0 12s.015 3.667.072 4.947c.06 1.277.261 2.148.558 2.913.306.788.717 1.459 1.384 2.126.667.666 1.336 1.079 2.126 1.384.766.296 1.636.499 2.913.558C8.333 23.988 8.74 24 12 24s3.667-.015 4.947-.072c1.277-.06 2.148-.262 2.913-.558.788-.306 1.459-.718 2.126-1.384.666-.667 1.079-1.335 1.384-2.126.296-.765.499-1.636.558-2.913.06-1.28.072-1.687.072-4.947s-.015-3.667-.072-4.947c-.06-1.277-.262-2.149-.558-2.913-.306-.789-.718-1.459-1.384-2.126C21.319 1.347 20.651.935 19.86.63c-.765-.297-1.636-.499-2.913-.558C15.667.012 15.26 0 12 0zm0 2.16c3.203 0 3.585.016 4.85.071 1.17.055 1.805.249 2.227.415.562.217.96.477 1.382.896.419.42.679.819.896 1.381.164.422.36 1.057.413 2.227.057 1.266.07 1.646.07 4.85s-.015 3.585-.074 4.85c-.061 1.17-.256 1.805-.421 2.227-.224.562-.479.96-.899 1.382-.419.419-.824.679-1.38.896-.42.164-1.065.36-2.235.413-1.274.057-1.649.07-4.859.07-3.211 0-3.586-.015-4.859-.074-1.171-.061-1.816-.256-2.236-.421-.569-.224-.96-.479-1.379-.899-.421-.419-.69-.824-.9-1.38-.165-.42-.359-1.065-.42-2.235-.045-1.26-.061-1.649-.061-4.844 0-3.196.016-3.586.061-4.861.061-1.17.255-1.814.42-2.234.21-.57.479-.96.9-1.381.419-.419.81-.689 1.379-.898.42-.166 1.051-.361 2.221-.421 1.275-.045 1.65-.06 4.859-.06l.045.03zm0 3.678a6.162 6.162 0 100 12.324 6.162 6.162 0 000-12.324zM12 16a4 4 0 110-8 4 4 0 010 8zm7.846-10.405a1.441 1.441 0 01-2.88 0 1.44 1.44 0 012.88 0z"/></svg>
+          Instagram
+        </a>
+        <a class="btn btn--primary" href="https://www.tiktok.com/@innovastudio301" target="_blank" rel="noopener" aria-label="TikTok de INNOVA Studio">
+          <svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M12.525.02c1.31-.02 2.61-.01 3.91-.02.08 1.53.63 3.09 1.75 4.17 1.12 1.11 2.7 1.62 4.24 1.79v4.03c-1.44-.05-2.89-.35-4.2-.97-.57-.26-1.1-.59-1.62-.93-.01 2.92.01 5.84-.02 8.75-.08 1.4-.54 2.79-1.35 3.94-1.31 1.92-3.58 3.17-5.91 3.21-1.43.08-2.86-.31-4.08-1.03-2.02-1.19-3.44-3.37-3.65-5.71-.02-.5-.03-1-.01-1.49.18-1.9 1.12-3.72 2.58-4.96 1.66-1.44 3.98-2.13 6.15-1.72.02 1.48-.04 2.96-.04 4.44-.99-.32-2.15-.23-3.02.37-.63.41-1.11 1.04-1.36 1.75-.21.51-.15 1.07-.14 1.61.24 1.64 1.82 3.02 3.5 2.87 1.12-.01 2.19-.66 2.77-1.61.19-.33.4-.67.41-1.06.1-1.79.06-3.57.07-5.36.01-4.03-.01-8.05.02-12.07z"/></svg>
+          TikTok
+        </a>
       </div>
     </div>
   </section>
